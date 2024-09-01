@@ -81,14 +81,24 @@ sequenceDiagram
 
 Here is a sample database schema to store the registration tokens:
 ```sql
-CREATE TABLE registration_tokens (
+CREATE TABLE users (
+    ...
+  fcm_token VARCHAR(255),
+  ...
+);
+```
+If a user wants to log in from multiple devices, we need to modify the database schema to accommodate this requirement. Here are an options:
+```sql
+CREATE TABLE fcm_tokens (
   id INT PRIMARY KEY,
   user_id INT,
-  registration_token VARCHAR(255),
+  device_id INT,
+  fcm_token VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 ```
 **Conclusion**
 
-This document describes the architecture for integrating Firebase Cloud Messaging (FCM) into our mobile application. We have outlined the components, sequence diagram, registration flow, message sending flow, and design considerations for our FCM architecture. By following this architecture, we can ensure that our application provides a reliable and scalable messaging solution for our users.
+This document describes the architecture for integrating Firebase Cloud Messaging (FCM) into our mobile application. We have outlined the components, sequence diagram, registration flow, message sending flow, and design considerations for our FCM architecture. 
+By following this architecture, we can ensure that our application provides a reliable and scalable messaging solution for our users.
